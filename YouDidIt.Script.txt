@@ -1,0 +1,6 @@
+<manialink name="YouDidIt" version="3">
+
+<label id="sdhelper-label" pos="155 85" hidden="false" z-index="3" textsize="5" halign="right" textcolor="FFF" text="$sYay." />
+<quad size="320 180" pos="0 0" halign="center" valign="center" url="https://xertrov.github.io/tm-assets/item-precision-04.png" hidden="0" />
+
+</manialink>
