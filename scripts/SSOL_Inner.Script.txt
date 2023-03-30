@@ -1,0 +1,174 @@
+#Include "MathLib" as ML
+#Include "TextLib" as TL
+
+#Const C_PageUID "SSOL_UI"
+
+
+// logging function, should be "MLHook_LogMe_" + PageUID
+Void MLHookLog(Text msg) {
+    SendCustomEvent("MLHook_LogMe_" ^ C_PageUID, [msg]);
+}
+
+// don't care about Y coord b/c they're all the same
+declare Vec2[] CP_Positions;
+declare CSmPlayer ThePlayer;
+
+
+
+declare Integer LastStartTime;
+declare Integer LastCpCount;
+
+Void UpdateNewCPs() {
+
+}
+
+
+Void SetPlayer() {
+    if (GUIPlayer != Null) {
+        ThePlayer <=> GUIPlayer;
+        return;
+    }
+    foreach (Player in Players) {
+        if (Player.User.Name == LocalUser.Name) {
+            ThePlayer <=> Player;
+            // MLHookLog("Found Player: " ^ Player.User.Name);
+            break;
+        }
+    }
+}
+
+
+declare Vec2 RemMapOffs = <-418, -794>;
+declare Vec2 MapSize = <833 - 418, 1014 - 794>;
+declare Vec2 ImgInnerSize = <3221 - 410, 1982 - 504>;
+declare Vec2 Scale = ImgInnerSize / MapSize;
+declare Vec2 AddPxOffs = <410, 504>;
+
+
+Vec2 ImageCoords(Vec2 MapCoords) {
+    declare Vec2 pos = <MapCoords.Z, MapCoords.X>;
+
+    // declare Vec2 RemMapOffs = <-418, -794>;
+    // declare Vec2 MapSize = <833 - 418, 1014 - 794>;
+    // declare Vec2 ImgInnerSize = <3221 - 410, 1982 - 504>;
+    // declare Vec2 Scale = ImgInnerSize / MapSize;
+    // declare Vec2 AddPxOffs = <410, 504>;
+
+    return (pos + RemMapOffs) * Scale + AddPxOffs;
+}
+
+Void LoadCheckpointLocations() {
+    CP_Positions = [
+        <854, 694>,
+        <821, 693>,
+        <811, 678>,
+        <805, 667>,
+        <799, 652>,
+        <797, 641>,
+        <797, 630>,
+        <797, 618>,
+        <797, 608>,
+        <797, 598>,
+        <796, 587>,
+        <796, 577>,
+        <795, 570>,
+        <794, 561>,
+        <839, 573>,
+        <851, 591>,
+        <829, 604>,
+        <812, 593>,
+        <812, 629>,
+        <828, 662>,
+        <855, 642>,
+        <848, 525>,
+        <845, 534>,
+        <854, 532>,
+        <878, 570>,
+        <884, 577>,
+        <875, 579>,
+        <937, 619>,
+        <942, 626>,
+        <934, 628>,
+        <920, 638>,
+        <904, 649>,
+        <902, 667>,
+        <896, 681>,
+        <891, 695>,
+        <887, 710>,
+        <883, 728>,
+        <899, 593>,
+        <892, 606>,
+        <896, 620>,
+        <899, 634>,
+        <1002, 418>,
+        <983, 419>,
+        <979, 434>,
+        <960, 447>,
+        <970, 445>,
+        <963, 438>,
+        <927, 444>,
+        <902, 457>,
+        <900, 465>,
+        <909, 463>,
+        <1007, 560>,
+        <999, 573>,
+        <989, 582>,
+        <977, 592>,
+        <967, 600>,
+        <964, 610>,
+        <964, 622>,
+        <964, 631>,
+        <963, 648>,
+        <960, 666>,
+        <951, 678>,
+        <946, 688>,
+        <942, 701>,
+        <938, 714>,
+        <913, 743>,
+        <884, 756>,
+        <887, 783>,
+        <903, 794>,
+        <926, 790>,
+        <936, 773>,
+        <947, 759>,
+        <962, 750>,
+        <966, 778>,
+        <961, 802>,
+        <929, 812>,
+        <901, 833>,
+        <876, 813>,
+        <859, 780>,
+        <832, 785>,
+        <838, 754>,
+        <860, 744>,
+        <837, 723>,
+        <906.127, 583.579>,
+        <914, 569>,
+        <921, 554>,
+        <927, 541>,
+        <931, 524>,
+        <932, 509>,
+        <972, 517>,
+        <980, 522>,
+        <981, 513>,
+        <998, 498>,
+        <1007, 496>,
+        <1001, 489>,
+        <980, 470>,
+        <982, 457>,
+        <990, 446>,
+        <1007, 443>,
+        <1014, 428>
+    ];
+}
+
+main() {
+    LoadCheckpointLocations();
+    SetPlayer();
+    InitConstants();
+
+    while (true) {
+        yield;
+        UpdateNewCPs();
+    }
+}
