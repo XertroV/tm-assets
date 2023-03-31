@@ -23,7 +23,7 @@ Void UpdateNewCPs() {
 
 Void SetPlayer() {
     MLHookLog("Test");
-    // MLHookLog("This: " ^ Map);
+    MLHookLog("This: " ^ System);
     // if (GUIPlayer != Null) {
     //     ThePlayer <=> GUIPlayer;
     //     return;
